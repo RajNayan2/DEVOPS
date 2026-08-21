@@ -1,6 +1,0 @@
-web_public_ip
-app_private_ip
-db_endpoint
-peering_connection_id
-nat_gateway_public_ip
-frontend_url
