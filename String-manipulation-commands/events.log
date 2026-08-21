@@ -1,0 +1,22 @@
+cat > events.log << 'EOF'
+2026-08-18 09:00:01 INFO Server started
+2026-08-18 09:01:12 INFO User login successful
+2026-08-18 09:02:25 INFO Database connected
+2026-08-18 09:03:31 FAIL Authentication failed
+2026-08-18 09:04:45 INFO Request processed
+2026-08-18 09:05:52 INFO File uploaded
+2026-08-18 09:06:18 FAIL Database connection failed
+2026-08-18 09:07:29 INFO User logout
+2026-08-18 09:08:40 INFO Backup started
+2026-08-18 09:09:55 FAIL Permission denied
+2026-08-18 09:10:10 INFO Backup completed
+2026-08-18 09:11:21 INFO Server health check
+2026-08-18 09:12:35 INFO New user registered
+2026-08-18 09:13:48 FAIL Network timeout
+2026-08-18 09:14:52 INFO Request processed
+2026-08-18 09:15:07 INFO Cache cleared
+2026-08-18 09:16:19 FAIL Service unavailable
+2026-08-18 09:17:33 INFO Service restarted
+2026-08-18 09:18:46 INFO Monitoring active
+2026-08-18 09:19:59 FAIL Invalid configuration
+EOF
