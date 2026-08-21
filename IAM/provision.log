@@ -1,0 +1,11 @@
+========== IAM PROVISIONING ==========
+Processing 5 users...
+REJECTED: dave.s - missing department
+REJECTED: eve.n - invalid access_level
+Created custom policy
+SUCCESS: created alice.k
+SUCCESS: policy attached - alice.k | poweruser
+SUCCESS: created bob.m
+SUCCESS: policy attached - bob.m | readonly
+SUCCESS: created carol.d
+SUCCESS: policy attached - carol.d | poweruser
