@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NimbusCart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        #error {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>NimbusCart Product Catalog</h1>
+
+<div id="error"></div>
+
+<h2>Add Product</h2>
+
+<form id="productForm">
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Product name"
+        required
+    >
+
+    <input
+        type="number"
+        id="price"
+        placeholder="Price"
+        step="0.01"
+        required
+    >
+
+    <input
+        type="number"
+        id="stock"
+        placeholder="Stock"
+        required
+    >
+
+    <button type="submit">
+        Add Product
+    </button>
+
+</form>
+
+<h2>Products</h2>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+
+    <tbody id="products"></tbody>
+
+</table>
+
+<script>
+
+async function loadProducts() {
+
+    const error = document.getElementById("error");
+
+    try {
+
+        const response = await fetch("/api/items");
+
+        if (!response.ok) {
+            throw new Error("API request failed");
+        }
+
+        const products = await response.json();
+
+        const table = document.getElementById("products");
+
+        table.innerHTML = "";
+
+        products.forEach(product => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.stock}</td>
+            `;
+
+            table.appendChild(row);
+        });
+
+        error.textContent = "";
+
+    } catch (err) {
+
+        error.textContent =
+            "Unable to connect to API.";
+    }
+}
+
+
+document
+    .getElementById("productForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("name").value;
+
+        const price =
+            document.getElementById("price").value;
+
+        const stock =
+            document.getElementById("stock").value;
+
+        try {
+
+            const response = await fetch(
+                "/api/items",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name,
+                        price: price,
+                        stock: stock
+                    })
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to add product");
+            }
+
+            document
+                .getElementById("productForm")
+                .reset();
+
+            loadProducts();
+
+        } catch (err) {
+
+            document.getElementById("error").textContent =
+                "Failed to add product.";
+        }
+
+    });
+
+
+loadProducts();
+
+</script>
+
+</body>
+</html>
